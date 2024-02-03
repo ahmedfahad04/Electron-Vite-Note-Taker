@@ -23,7 +23,8 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
-    "@mdxeditor/editor": "^2.7.0"
+    "@mdxeditor/editor": "^2.7.0",
+    "jotai": "^2.6.4"
   },
   "devDependencies": {
     "@codemirror/language": "^6.10.1",
