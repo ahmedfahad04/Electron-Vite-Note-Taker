@@ -1,8 +1,11 @@
+import { Content, RootLayout, Sidebar } from '@/components'
+
 function App(): JSX.Element {
   return (
-    <div className="flex h-full items-center justify-center">
-      <h2 className="bg-red-500 text-4xl">Hello from Electron</h2>
-    </div>
+    <RootLayout>
+      <Sidebar className="p-2">Sidebar</Sidebar>
+      <Content className="border-l bg-zic-900/50 border-l-white/20 ">Content</Content>
+    </RootLayout>
   )
 }
 
