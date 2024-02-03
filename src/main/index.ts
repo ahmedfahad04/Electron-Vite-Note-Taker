@@ -1,6 +1,6 @@
-import { getNotes, readNote } from '@/lib'
+import { getNotes, readNote, writeNote } from '@/lib'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
-import { GetNotes, ReadNote } from '@shared/types'
+import { GetNotes, ReadNote, WriteNote } from '@shared/types'
 import { BrowserWindow, app, ipcMain, shell } from 'electron'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
@@ -57,9 +57,14 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
+  // ============ CUSTOM HANDLES ============
+
   //! main process (custom handlers)
   ipcMain.handle('getNotes', (_, ...args: Parameters<GetNotes>) => getNotes(...args))
   ipcMain.handle('readNotes', (_, ...args: Parameters<ReadNote>) => readNote(...args))
+  ipcMain.handle('writeNotes', (_, ...args: Parameters<WriteNote>) => writeNote(...args))
+
+  // ============ CUSTOM HANDLES ============
 
   createWindow()
 
@@ -87,3 +92,6 @@ app.on('window-all-closed', () => {
 app.commandLine.appendSwitch('ignore-gpu-blacklist')
 app.commandLine.appendSwitch('disable-gpu')
 app.commandLine.appendSwitch('disable-gpu-compositing')
+
+// disable hardware excelleration
+// app.disableHardwareAcceleration()

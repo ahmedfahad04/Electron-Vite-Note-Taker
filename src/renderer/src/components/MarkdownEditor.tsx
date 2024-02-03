@@ -9,13 +9,15 @@ import {
 import { useEditor } from '@renderer/hooks/useEditor'
 
 export const MarkdownEditor = () => {
-  const { seletedNote } = useEditor()
-  if (!seletedNote) return null
+  const { editorRef, selectedNote, handleAutoSaving } = useEditor()
+  if (!selectedNote) return null
 
   return (
     <MDXEditor
-      key={seletedNote.title} // this is a must to re-render while new note is clicked
-      markdown={seletedNote.content}
+      ref={editorRef}
+      key={selectedNote.title} // this is a must to re-render while new note is clicked
+      markdown={selectedNote.content}
+      onChange={handleAutoSaving}
       plugins={[
         headingsPlugin(),
         listsPlugin(),
