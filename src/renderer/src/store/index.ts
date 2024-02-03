@@ -8,12 +8,11 @@ export const selectedNoteAtom = atom((get) => {
   const notes = get(notesAtom)
   const selectedNoteIndex = get(selectedNoteIndexAtom)
 
-  if (!selectedNoteIndexAtom) return 0
-
+  if (selectedNoteIndex == null) return null
   const selectedNote = notes[selectedNoteIndex]
 
   return {
-    ...selectedNote,
-    content: `Hello from Note${selectedNoteIndex}`
+    ...selectedNote
+    // content: `Hello from Note${selectedNoteIndex}`
   }
 })

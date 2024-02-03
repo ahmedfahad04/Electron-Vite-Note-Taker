@@ -6,11 +6,16 @@ import {
   markdownShortcutPlugin,
   quotePlugin
 } from '@mdxeditor/editor'
+import { useEditor } from '@renderer/hooks/useEditor'
 
 export const MarkdownEditor = () => {
+  const { seletedNote } = useEditor()
+  if (!seletedNote) return null
+
   return (
     <MDXEditor
-      markdown={'# Hello world'}
+      key={seletedNote.title} // this is a must to re-render while new note is clicked
+      markdown={seletedNote.content}
       plugins={[
         headingsPlugin(),
         listsPlugin(),

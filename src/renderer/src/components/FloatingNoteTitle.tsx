@@ -1,12 +1,18 @@
+import { selectedNoteAtom } from '@renderer/store'
+import { useAtomValue } from 'jotai'
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export const FloatingNoteTitle = ({ className, ...props }: ComponentProps<'div'>) => {
-  const title = 'Note Title'
+  const selectedNote = useAtomValue(selectedNoteAtom)
+
+  if (!selectedNote) {
+    return null
+  }
 
   return (
-    <div className={twMerge('flex justify-center', className)} {...props}>
-      <span className="text-gray-400">{title}</span>
+    <div className={twMerge('flex justify-center bg-zinc-400/50', className)} {...props}>
+      <span className="text-white">{selectedNote.title}</span>
     </div>
-)
+  )
 }
