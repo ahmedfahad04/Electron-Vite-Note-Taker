@@ -24,8 +24,8 @@ export const selectedNoteAtom = atom((get) => {
   const selectedNote = notes[selectedNoteIndex]
 
   return {
-    ...selectedNote
-    // content: `Hello from Note${selectedNoteIndex}`
+    ...selectedNote,
+    content: `Hello from Note> ${selectedNoteIndex}`
   }
 })
 
@@ -38,7 +38,6 @@ export const createEmptyNoteAtom = atom(null, (get, set) => {
   const title = `Note ${notes.length + 1}`
   const newNote: NoteInfo = {
     title: title,
-    content: 'Sample Content 555',
     lastEditTime: new Date().getTime()
   }
 

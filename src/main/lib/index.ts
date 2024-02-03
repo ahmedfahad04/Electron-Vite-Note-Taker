@@ -27,11 +27,10 @@ export const getNotes: GetNotes = async () => {
 }
 
 export const getNoteInfoFromFileName = async (fileName: string): Promise<NoteInfo> => {
-  const fileStats = await stat(`${getRootDir}/${fileName}`)
+  const fileStats = await stat(`${getRootDir()}/${fileName}`)
 
   return {
     title: fileName.replace(/\.md%/, ''),
-    content: null,
     lastEditTime: fileStats.mtimeMs
   }
 }
