@@ -9,7 +9,7 @@ import {
 import { useEditor } from '@renderer/hooks/useEditor'
 
 export const MarkdownEditor = () => {
-  const { editorRef, selectedNote, handleAutoSaving } = useEditor()
+  const { editorRef, selectedNote, handleAutoSaving, handleBlur } = useEditor()
   if (!selectedNote) return null
 
   return (
@@ -18,6 +18,7 @@ export const MarkdownEditor = () => {
       key={selectedNote.title} // this is a must to re-render while new note is clicked
       markdown={selectedNote.content}
       onChange={handleAutoSaving}
+      onBlur={handleBlur}
       plugins={[
         headingsPlugin(),
         listsPlugin(),
