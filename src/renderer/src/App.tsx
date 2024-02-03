@@ -1,4 +1,11 @@
-import { ActionButtonsRow, Content, MarkdownEditor, RootLayout, Sidebar } from '@/components'
+import {
+  ActionButtonsRow,
+  Content,
+  FloatingNoteTitle,
+  MarkdownEditor,
+  RootLayout,
+  Sidebar
+} from '@/components'
 import { NotePreviewList } from './components/NotePreviewList'
 
 function App(): JSX.Element {
@@ -9,6 +16,7 @@ function App(): JSX.Element {
         <NotePreviewList className="mt-5 space-y-1" />
       </Sidebar>
       <Content className="border-l bg-zic-900/50 border-l-white/20 text-white">
+        <FloatingNoteTitle />
         <MarkdownEditor />
       </Content>
     </RootLayout>
