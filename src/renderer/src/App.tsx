@@ -1,4 +1,4 @@
-import { ActionButtonsRow, Content, RootLayout, Sidebar } from '@/components'
+import { ActionButtonsRow, Content, MarkdownEditor, RootLayout, Sidebar } from '@/components'
 import { NotePreviewList } from './components/NotePreviewList'
 
 function App(): JSX.Element {
@@ -8,7 +8,9 @@ function App(): JSX.Element {
         <ActionButtonsRow className="flex justify-between mt-1" />
         <NotePreviewList className="mt-5 space-y-1" />
       </Sidebar>
-      <Content className="border-l bg-zic-900/50 border-l-white/20 ">Content</Content>
+      <Content className="border-l bg-zic-900/50 border-l-white/20 text-white">
+        <MarkdownEditor />
+      </Content>
     </RootLayout>
   )
 }
