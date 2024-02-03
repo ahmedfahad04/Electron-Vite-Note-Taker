@@ -10,24 +10,39 @@ const loadNotes = async () => {
   return notes.sort((a, b) => b.lastEditTime - a.lastEditTime)
 }
 
-const notesAtomAsync = atom<NoteInfo[] | Promise<NoteInfo[]>>(loadNotes())
-
-// used unwrap as notesAtomAsync is a async func while atom is non-async
-export const notesAtom = unwrap(notesAtomAsync, (prev) => prev)
-
-export const selectedNoteIndexAtom = atom<number | null>(null)
-export const selectedNoteAtom = atom((get) => {
+const selectedNoteAtomAsync = atom(async (get) => {
   const notes = get(notesAtom)
   const selectedNoteIndex = get(selectedNoteIndexAtom)
 
   if (selectedNoteIndex == null || !notes) return null
   const selectedNote = notes[selectedNoteIndex]
 
+  // read note content from local file
+  const noteContent = await window.context.readNotes(selectedNote.title)
+
   return {
     ...selectedNote,
-    content: `Hello from Note> ${selectedNoteIndex}`
+    content: noteContent
   }
 })
+
+const notesAtomAsync = atom<NoteInfo[] | Promise<NoteInfo[]>>(loadNotes())
+
+//? 1. used unwrap as notesAtomAsync is a async func while atom is non-async
+export const notesAtom = unwrap(notesAtomAsync, (prev) => prev)
+
+export const selectedNoteIndexAtom = atom<number | null>(null)
+
+//? 2. read notes content
+export const selectedNoteAtom = unwrap(
+  selectedNoteAtomAsync,
+  (prev) =>
+    prev ?? {
+      title: '',
+      content: '',
+      lastEditTime: ''
+    }
+)
 
 export const createEmptyNoteAtom = atom(null, (get, set) => {
   const notes = get(notesAtom)
