@@ -3,8 +3,12 @@ import { useNotesList } from '@renderer/hooks/useNotesList'
 import { ComponentProps } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-export const NotePreviewList = ({ className, ...props }: ComponentProps<'ul'>) => {
-  const { notes, selectedNoteIndex, handleSelectedNote } = useNotesList({})
+export type NotePreviewListProp = ComponentProps<'ul'> & {
+  onSelect?: () => void
+}
+
+export const NotePreviewList = ({ onSelect, className, ...props }: NotePreviewListProp) => {
+  const { notes, selectedNoteIndex, handleSelectedNote } = useNotesList({ onSelect })
 
   if (notes.length === 0) {
     return (

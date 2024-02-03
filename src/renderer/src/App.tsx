@@ -6,16 +6,26 @@ import {
   RootLayout,
   Sidebar
 } from '@/components'
+import { useRef } from 'react'
 import { NotePreviewList } from './components/NotePreviewList'
 
 function App(): JSX.Element {
+  const contentContainerRef = useRef<HTMLDivElement>(null)
+
+  const resetScroll = () => {
+    contentContainerRef.current?.scrollTo(0, 0)
+  }
+
   return (
     <RootLayout>
       <Sidebar className="p-2 bg-zinc-900">
         <ActionButtonsRow className="flex justify-between mt-1" />
-        <NotePreviewList className="mt-5 space-y-1" />
+        <NotePreviewList className="mt-5 space-y-1" onSelect={resetScroll} />
       </Sidebar>
-      <Content className="border-l bg-zic-900/50 border-l-white/20 text-white">
+      <Content
+        ref={contentContainerRef}
+        className="border-l bg-zic-900/50 border-l-white/20 text-white"
+      >
         <FloatingNoteTitle />
         <MarkdownEditor />
       </Content>
