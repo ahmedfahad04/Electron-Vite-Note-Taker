@@ -9,7 +9,7 @@ import { useRef } from 'react'
 export const useEditor = () => {
   const selectedNote = useAtomValue(selectedNoteAtom)
   const saveNote = useSetAtom(saveNoteAtom)
-  const editorRef = useRef<MDXEditorMethods>()
+  const editorRef = useRef<MDXEditorMethods>(null)
 
   const handleAutoSaving = throttle(
     async (content: NoteContent) => {
