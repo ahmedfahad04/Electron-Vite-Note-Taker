@@ -1,8 +1,8 @@
 import { appDirectoryName, fileEncoding } from '@shared/constants'
 import { NoteInfo } from '@shared/model'
-import { CreateNote, GetNotes, ReadNote, WriteNote } from '@shared/types'
+import { CreateNote, DeleteNote, GetNotes, ReadNote, WriteNote } from '@shared/types'
 import { dialog } from 'electron'
-import { ensureDir, readFile, readdir, stat, writeFile } from 'fs-extra'
+import { ensureDir, readFile, readdir, remove, stat, writeFile } from 'fs-extra'
 import { homedir } from 'os'
 import path from 'path'
 
@@ -39,6 +39,8 @@ export const getNoteInfoFromFileName = async (fileName: string): Promise<NoteInf
 
 export const readNote: ReadNote = async (fileName) => {
   const rootDir = getRootDir()
+
+  //! fs function to read file
   return readFile(`${rootDir}/${fileName}`, { encoding: fileEncoding })
 }
 
@@ -81,9 +83,33 @@ export const createNote: CreateNote = async () => {
   console.info(`Creating note: ${filePath}`)
 
   const fileNameWithExt = fileName.concat('.md')
+
+  //! fs function to create file
   await writeFile(filePath, '')
 
-  console.log('FILENAME: ', fileNameWithExt)
-
   return fileNameWithExt
+}
+
+export const deleteNote: DeleteNote = async (fileName) => {
+  const rootDir = getRootDir()
+
+  const { response } = await dialog.showMessageBox({
+    type: 'warning',
+    title: 'Delete Note',
+    message: `Are you sure you want to delete ${fileName}`,
+    buttons: ['Delete', 'Cancel'], /// 0 Delete, 1 Cancel
+    defaultId: 1,
+    cancelId: 1
+  })
+
+  if (response === 1) {
+    console.info('Note Deletion Canceled')
+    return false
+  }
+
+  console.info(`Deleting note: ${fileName}`)
+
+  //! fs function to delete file
+  await remove(`${rootDir}/${fileName}`)
+  return true
 }
