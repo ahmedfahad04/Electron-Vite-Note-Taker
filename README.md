@@ -33,10 +33,14 @@ $ yarn build:mac
 $ yarn build:linux
 ```
 
-### How to add Local File Manupulation features
+### How to add Local File Manipulation features
 
-src/main/lib/index.ts (write the action as a function) ==>
-src/main/index.ts (invoke this function with appropieate args and params) ==>
-src/preload/index.ts (add context name in contextBridge.expostInMainWorld) ==>
-src/preload/index.d.ts (update the global interface) =>
-src/src/render/store/index.ts (connect this function with frontend)
+`src/main/lib/index.ts` (write the action as a function) ==>
+`src/main/index.ts` (invoke this function with appropriate args and params) ==>
+`src/preload/index.ts` (add context name in contextBridge.exposeInMainWorld) ==>
+`src/preload/index.d.ts` (update the global interface) ==>
+`src/src/render/store/index.ts` (connect this function with frontend)
+
+### Windows Specific config
+
+- We have to use Path.join to define paths as path definition is different from than that of linux/macos

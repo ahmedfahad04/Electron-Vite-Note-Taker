@@ -8,8 +8,8 @@ import { homedir } from 'os'
 import path from 'path'
 import welcomeNoteFile from '../../../resources/welcomeNote.md?asset'
 
-export const getRootDir = () => {
-  return `${homedir()}/Desktop/${appDirectoryName}`
+const getRootDir = () => {
+  return path.join(homedir(), 'Desktop', appDirectoryName)
 }
 
 export const getNotes: GetNotes = async () => {
@@ -75,7 +75,7 @@ export const createNote: CreateNote = async () => {
   })
 
   if (canceled || !filePath) {
-    console.info('Note Creation Canceled')
+    console.info('Note Creation Canceled', rootDir)
     return false
   }
 
