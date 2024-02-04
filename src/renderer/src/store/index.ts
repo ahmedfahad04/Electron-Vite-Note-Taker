@@ -69,13 +69,17 @@ export const saveNoteAtom = atom(null, async (get, set, newContent: NoteContent)
   )
 })
 
-export const createEmptyNoteAtom = atom(null, (get, set) => {
+//? 4. create new note
+export const createEmptyNoteAtom = atom(null, async (get, set) => {
   const notes = get(notesAtom)
 
   //! as notes warns about 'undefined', we added this condition !notes -> return
   if (!notes) return
 
-  const title = `Note ${notes.length + 1}`
+  const title = await window.context.createNotes()
+
+  if (!title) return
+
   const newNote: NoteInfo = {
     title: title,
     lastEditTime: new Date().getTime()
